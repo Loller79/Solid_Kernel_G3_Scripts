@@ -1,5 +1,8 @@
 #!/system/bin/sh
 
+# CPU Boost & Solid Kernel Configuration
+# Created by Dario Sechi <dario.sechi.7900@gmail.com>
+
 # Hardcoded paths and values
 load=/sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load;
 freq=/sys/devices/system/cpu/cpufreq/interactive/hispeed_freq;

@@ -1,5 +1,8 @@
 #!/system/bin/sh
 
+# GPU & FSync Control Through Screen ON/OFF
+# Created by Dario Sechi <dario.sechi.7900@gmail.com>
+
 # Hardcoded paths and values
 governor=/sys/class/devfreq/fdb00000.qcom,kgsl-3d0/governor;
 governor_original=performance;
