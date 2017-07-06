@@ -21,7 +21,7 @@ if [ -r "$path"thermal ] && [ -r "$path"polling ] ; then
 	# Reads CPU polling input boost value
 	polling=$(cat "$path"polling);
 	# Check if the polling value is between 0 and 20
-	if [ $polling -ge 0 ] && [ $polling -le 20 ]; then
+	if [ "$polling" -ge 0 ] && [ "$polling" -le 20 ]; then
 	{
 		polling=$polling;
 	}
@@ -77,7 +77,7 @@ do
 
 	# Restore the default values once the work is done
 	echo 90 > $load;
-	echo "$freq_original" > $freq;
+	echo $freq_original > $freq;
 }
 done
 }

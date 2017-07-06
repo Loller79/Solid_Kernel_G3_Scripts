@@ -17,7 +17,7 @@ do
 		# useless rewrites that could deteriorate performances
 		if [ "$check" = "0" ]; then
 		{
-			echo "$governor_original" > $governor;
+			echo $governor_original > $governor;
 			echo 0 > $fsync;
 			check=1;
 		}
