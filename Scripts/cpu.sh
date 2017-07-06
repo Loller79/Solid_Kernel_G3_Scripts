@@ -20,17 +20,17 @@ if [ -r "$path"thermal ] && [ -r "$path"polling ] ; then
 
 	# Reads CPU polling input boost value
 	polling=$(cat "$path"polling);
-	for i in $(seq 0 20)
-	do
+	# Check if the polling value is between 0 and 20
+	if [ $polling -ge 0 ] && [ $polling -le 20 ]; then
 	{
-		if [ "$i" = "$polling" ]; then
-		{
-			polling=$i;
-			break;
-		}
-		fi
+		polling=$polling;
 	}
-	done
+	else
+	{
+		# If the user-set value isn't correct set the default one
+		polling=5;
+	}
+	fi
 }
 else
 {
@@ -60,7 +60,7 @@ else
 fi
 
 # Detect if the user has set 0 and thus decided to disable the CPU boost
-if ! [ "$polling" = "0" ]; then
+if [ "$polling" != "0" ]; then
 {
 while true;
 do
