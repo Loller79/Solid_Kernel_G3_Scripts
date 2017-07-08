@@ -26,6 +26,9 @@ do
 	
 	# Write on a file that the boost must be repeated
 	echo 1 > "$path"hold;
+
+	# Sleep for 1 second to avoid high CPU usage
+	sleep 1;
 }
 done
 }
