@@ -75,8 +75,18 @@ do
 	echo 2457600 > $freq;
 	echo 0 > $load;
 
-	# Now we let the boost last at least 1 second (minimum polling value) to avoid high CPU usage
-	sleep $polling;
+	# Set hold to 1 everytime to avoid nasty problems
+	hold=1;
+	while [ "$hold" = "1" ]; do
+	{
+		# Disable hold since the boost started
+		echo 0 > "$path"hold;
+		# Keep the boost as long as it's set
+		sleep $polling;
+		# Verify at the end if there have been other touches, if yes boost again
+		hold=$(cat "$path"hold);
+	}
+	done
 
 	# Restore the default values once the work is done
 	echo 90 > $load;
