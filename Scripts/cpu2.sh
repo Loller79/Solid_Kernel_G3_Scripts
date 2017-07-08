@@ -11,7 +11,7 @@ if [ -r "$path"polling ]; then
 }
 else
 {
-	polling=5;
+	polling=2.5;
 }
 fi
 
@@ -21,12 +21,19 @@ if [ "$polling" != "0" ]; then
 while true;
 do
 {
-	# If the screen is touched again signal to keep boosting
-	getevent -c 1 /dev/input/event1;
-	
-	# Write on a file that the boost must be repeated
-	echo 1 > "$path"hold;
+	check=$(cat "$path"hold);
+	if [ "$check" = "0" ]; then
+	{
+		# If the screen is touched again signal to keep boosting
+		getevent -c 1 /dev/input/event1;
 
+		# Write on a file that the boost must be repeated
+		echo 1 > "$path"hold;
+
+		# Work is done so we break to avoid rewrites
+		check=1;
+	}
+	fi
 	# Sleep for 1 second to avoid high CPU usage
 	sleep 1;
 }

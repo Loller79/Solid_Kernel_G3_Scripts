@@ -31,7 +31,7 @@ if [ -r "$path"thermal ] && [ -r "$path"polling ] ; then
 	else
 	{
 		# If the user-set value isn't correct set the default one
-		polling=5;
+		polling=2.5;
 	}
 	fi
 }
@@ -57,8 +57,8 @@ else
 	}
 	done
 	# Default CPU polling input boost value
-	echo 5 > "$path"polling;
-	polling=5;
+	echo 2.5 > "$path"polling;
+	polling=2.5;
 }
 fi
 
