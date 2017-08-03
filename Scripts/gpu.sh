@@ -1,12 +1,11 @@
 #!/system/bin/sh
 
-# GPU & FSync Control Through Screen ON/OFF
+# GPU Control Through Screen ON/OFF
 # Created by Dario Sechi <dario.sechi.7900@gmail.com>
 
 # Hardcoded paths and values
 governor=/sys/class/devfreq/fdb00000.qcom,kgsl-3d0/governor;
 governor_original=performance;
-fsync=/sys/module/sync/parameters/fsync_enabled;
 check=0;
 
 while true;
@@ -21,7 +20,6 @@ do
 		if [ "$check" = "0" ]; then
 		{
 			echo $governor_original > $governor;
-			echo 0 > $fsync;
 			check=1;
 		}
 		fi
@@ -33,7 +31,6 @@ do
 			# Save the governor that the user is using before forcing powersave
 			governor_original=$(cat $governor);
 			echo powersave > $governor;
-			echo 1 > $fsync;
 			check=0;
 		}
 		fi
