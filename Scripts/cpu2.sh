@@ -11,7 +11,7 @@ if [ -r "$path"polling ]; then
 }
 else
 {
-	polling=2.5;
+	polling=3;
 }
 fi
 
