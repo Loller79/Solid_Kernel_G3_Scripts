@@ -7,12 +7,10 @@ path=/data/solid/;
 echo "Welcome to the Solid Kernel configuration script";
 echo "I'll ask you 4 questions";
 echo "";
-echo "Do you want the thermal-engine to run or not?"
-echo "Type 1 to enable it, 0 to disable it";
-echo "Note that solid kernel runs at 1GHz less than normal,";
-echo "So there's really not much need for the thermal-engine";
-echo "With those conditions, only enable it";
-echo "If you're raising your cpu frequency higher";
+echo "At what temperature should the CPU start throttling?";
+echo "Lower values will mean less heating, higher values";
+echo "will give better performances, the suggested range is";
+echo "between 50 and 80, any input will be saved so type carefully";
 read -r thermalinput;
 if [ -r "$path"thermal ]; then
 {
@@ -79,6 +77,7 @@ if [ -r "$path"polling ]; then
 }
 fi
 echo "Would you like to reboot your device and apply your settings?";
+echo "A reboot is necessary to make some of the changes effective";
 echo "Type 1 if you want to, anything else if not";
 read -r rebootinput;
 if [ "$rebootinput" = "1" ]; then

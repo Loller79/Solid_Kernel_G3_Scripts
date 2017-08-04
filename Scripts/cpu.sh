@@ -7,6 +7,7 @@
 load=/sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load;
 freq=/sys/devices/system/cpu/cpufreq/interactive/hispeed_freq;
 freq_original=$(cat $freq);
+thermal_path=/sys/module/msm_thermal/parameters/temp_threshold;
 
 # Userset values
 path=/data/solid/;
@@ -15,11 +16,8 @@ if [ -r "$path"thermal ] && [ -r "$path"polling ] ; then
 {
 	# Reads thermal userset value
 	thermal=$(cat "$path"thermal);
-	if [ "$thermal" = 0 ]; then
-	{
-		stop thermal-engine;
-	}
-	fi
+	stop thermal-engine;
+	echo "$thermal" > $thermal_path;
 
 	# Reads CPU polling input boost value
 	polling=$(cat "$path"polling);
@@ -39,9 +37,6 @@ else
 {
 	# Create solid directory
 	if ! [ -d "$path" ]; then { mkdir $path; } fi
-	# Default thermal value
-	echo 0 > "$path"thermal;
-	stop thermal-engine;
 	# Default display values
 	# We use echo to get an inline output
 	size=$(echo $(wm size));
@@ -56,6 +51,9 @@ else
 		sleep 1;
 	}
 	done
+	# Default thermal value
+	echo 75 > "$path"thermal;
+	stop thermal-engine;
 	# Default CPU polling input boost value
 	echo 3 > "$path"polling;
 	polling=3;
@@ -90,7 +88,7 @@ do
 
 	# Restore the default values once the work is done
 	echo 90 > $load;
-	echo $freq_original > $freq;
+	echo "$freq_original" > $freq;
 }
 done
 }
