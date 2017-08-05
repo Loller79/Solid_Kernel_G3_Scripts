@@ -15,12 +15,28 @@ do
 	screen=$(echo $(cat /sys/power/wake_lock));
 	if [ "$screen" != "" ]; then
 	{
-		# We use the check variable to let the code run only once and avoid
-		# useless rewrites that could deteriorate performances
-		if [ "$check" = "0" ]; then
+		# The output is empty if the device is sleeping, however sometimes this isn't true
+		if [ "$screen" != "PowerManagerService.WakeLocks" ]; then
 		{
-			echo $governor_original > $governor;
-			check=1;
+			# We use the check variable to let the code run only once and avoid
+			# useless rewrites that could deteriorate performances
+			if [ "$check" = "0" ]; then
+			{
+				echo $governor_original > $governor;
+				check=1;
+			}
+			fi
+		}
+		else
+		{
+			if [ "$check" = "1" ]; then
+			{
+				# Save the governor that the user is using before forcing powersave
+				governor_original=$(cat $governor);
+				echo powersave > $governor;
+				check=0;
+			}
+			fi
 		}
 		fi
 	}
